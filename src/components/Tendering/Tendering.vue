@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="container">
         <navcontent :title="ntitle"></navcontent>
-        <div class="flexL">
+        <div class="flexM">
             <div class="left bgcolor">
                 <el-form ref="form" :model="form" label-width="80px">
                     <el-form-item label="类别：">
@@ -103,59 +103,19 @@
                 </div>
 
             </div>
-            <div class="right">
-                <signUp></signUp>
-                <hotWord>
-                    <template slot="hot">
-                        <div class="top">
-                            <div class="flexM paddingW">
-                                <span>招标热词</span>
-                                <span>更多</span>
-                            </div>
-                        </div>
-                    </template>
-                    <template slot="hot">
-                        <div class="mid flexMW">
-                            <span>望远镜</span>
-                            <span>色谱仪</span>
-                        </div>
-                    </template>
-                    <template slot="hotContent">
-                        <div class="bottom flexW">
-                            <span v-for="(item,i) in words" :key="i">{{item}}</span>
-                        </div>
-                    </template>
-                </hotWord>
-                <hotWord>
-                    <template slot="hot">
-                        <div class="top">
-                            <div class="flexM paddingW">
-                                <span>最新施工方案</span>
-                                <span>更多</span>
-                            </div>
-                        </div>
-                    </template>
-                    <template slot="hotContent">
-                        <div class="bottom flexW">
-                            <span class="wordwrap" v-for="(item,i) in buildWord" :key="i">{{item}}</span>
-                        </div>
-                    </template>
-                </hotWord>
-            </div>
+            <rightContent></rightContent>
         </div>
     </div>
 </template>
 
 <script>
-import signUp from '../signUp'
-import hotWord from '../hotWords'
 import navcontent from '../NavTab/navcontent'
+import rightContent from '../rightContent'
 
 export default {
     components:{
-        signUp,
         navcontent,
-        hotWord
+        rightContent
     },
     data () {
         return {
@@ -199,17 +159,17 @@ export default {
 }
 </script>
 <style lang="stylus">
+.container
+    width 1200px
+    margin 0 auto
 .serach-btn
     margin-left 15px
-.flexL
-    .left
-        flex 1
-        width 70%
-        margin 0 20px
-        padding-right 20px
-    .right
-        width 300px
-        margin-right 20px
+.left
+    width 880px
+    padding-right 20px
+    margin-right 20px
+.right
+    width 300px
 .pages
     display flex
     flex-wrap wrap

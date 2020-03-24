@@ -11,7 +11,7 @@
 <script>
 export default {
   components: {
-    
+
   }
 }
 </script>
@@ -40,6 +40,10 @@ export default {
   display:flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+}
+#app .flexC {
+    display:flex;
+    justify-content:center;
 }
 .bgcolor {
   background-color: #fff;

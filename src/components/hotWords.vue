@@ -1,5 +1,5 @@
 <template>
-  <div class="container bgcolor">
+  <div class="containers bgcolor">
       <slot name="hotTitle"></slot>
       <slot name="hot"></slot>
       <slot name="hotContent"></slot>
@@ -21,11 +21,10 @@ export default {
 
 </script>
 <style lang='stylus' scoped>
-.container
+.containers
     margin-top 15px
     display flex
     flex-direction column
-    flex 1
 .top
     border-bottom 1px solid #ddd
     height 48px
