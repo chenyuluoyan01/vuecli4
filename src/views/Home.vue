@@ -1,17 +1,5 @@
 <template>
   <div class="home">
-    <Tender msg="Welcome to Your Vue.js App"/>
+    <h1>This is an home page</h1>
   </div>
 </template>
-
-<script>
-// @ is an alias to /src
-import Tender from '@/components/Tendering/Tendering'
-
-export default {
-  name: 'Home',
-  components: {
-    Tender
-  }
-}
-</script>
