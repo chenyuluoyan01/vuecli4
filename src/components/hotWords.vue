@@ -29,6 +29,10 @@ export default {
     border-bottom 1px solid #ddd
     height 48px
     line-height 48px
+    font-size 18px
+    .more
+        font-size 14px
+        color #999
 .mid
     padding 0 15px
     height 32px
@@ -36,7 +40,7 @@ export default {
     color #de0403
 .bottom
     line-height 32px
-    padding-right 15px
+    padding 0 15px 10px 15px
     span
         padding-left 15px
 

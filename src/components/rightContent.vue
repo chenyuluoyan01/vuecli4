@@ -5,15 +5,16 @@
             <template slot="hot">
                 <div class="top">
                     <div class="flexM paddingW">
-                        <span>招标热词</span>
-                        <span>更多</span>
+                        
+                        <span><img class="shutiao" src="../assets/images/bd_left.png" alt="">招标热词</span>
+                        <span class="more">更多</span>
                     </div>
                 </div>
             </template>
             <template slot="hot">
                 <div class="mid flexMW">
-                    <span>望远镜</span>
-                    <span>色谱仪</span>
+                    <span><i class="iconfont iconhuo" style="font-size:24px;"></i>望远镜</span>
+                    <span><i class="iconfont iconnew" style="font-size:28px;"></i>色谱仪</span>
                 </div>
             </template>
             <template slot="hotContent">
@@ -26,8 +27,8 @@
             <template slot="hot">
                 <div class="top">
                     <div class="flexM paddingW">
-                        <span>最新施工方案</span>
-                        <span>更多</span>
+                        <span><img class="shutiao" src="../assets/images/bd_left.png" alt="">最新施工方案</span>
+                        <span class="more">更多</span>
                     </div>
                 </div>
             </template>
@@ -60,4 +61,12 @@ export default {
 <style lang='stylus' scoped>
 .mid,.bottom
     font-size 14px
+.shutiao
+    position relative
+    padding-right 8px
+    top 4px
+.iconfont
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
 </style>

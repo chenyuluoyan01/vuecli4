@@ -71,27 +71,28 @@
 
                 <el-table
                 :data="tableData"
-                style="width: 100%">
+                style="width: 100%;margin-left:18px">
                     <el-table-column
                         prop="classes"
                         label="类型"
-                        width="180">
+                        width="120">
                     </el-table-column>
                     <el-table-column
                         prop="address"
                         label="地址"
-                        width="180">
+                        width="150">
                     </el-table-column>
                     <el-table-column
                         prop="titles"
                         label="招标信息标题">
                         <template slot-scope="scope">
-                            <router-link to="/tenderDetail">{{scope.row.titles}}</router-link>
+                            <router-link class="table_link" to="/tenderDetail">{{scope.row.titles}}</router-link>
                         </template>
                     </el-table-column>
                     <el-table-column
                         prop="time"
-                        label="发布时间">
+                        label="发布时间"
+                        width="180">
                     </el-table-column>
                 </el-table>
                 <div class="pages">
@@ -119,7 +120,7 @@ export default {
     },
     data () {
         return {
-            ntitle:["> 招标信息"],
+            ntitle:["招标信息"],
             words:["三坐标","量规","量块","量具","医药","医疗","防疫药品","急救箱","采血管","绘图机","通用仪器","三坐标","量规","量块","量具","医药","医疗","防疫药品","急救箱","采血管","绘图机","通用仪器"],
             buildWord:["广东恒建工程有限公司","中交二航局-广东广州","中交四航局-广州","中铁南方投资集团有限公司","鹤山市友和建筑工程有限公司","中铁建设集团有限公司华南分公司","中国能源建设集团广东火电工程有限公","中铁建设集团有限公司华南分公司"],
             form: {
@@ -129,26 +130,26 @@ export default {
                 time:'全部'
             },
             tableData: [{
-            classes: '招标公告',
-            address: '四川',
-            titles: '四川省资阳市乐至县盛池乡卫生院数字化X线摄影系统（DR）政府采购项目询价采购公告',
-            time: '2020-03-23'
-          }, {
-            classes: '招标公告',
-            address: '四川',
-            titles: '四川省巴中市南江县人民医院住院大楼大厅LED采购项目询价采购公告',
-            time: '2020-03-23'
-          },{
-            classes: '招标公告',
-            address: '四川',
-            titles: '四川省内江市东兴区自然资源和规划局内江市东兴区2019年中央财政森林抚育采购项目公开招标采购公告更正公告',
-            time: '2020-03-23'
-          },{
-            classes: '招标公告',
-            address: '四川',
-            titles: '四川省巴中市南江县人民医院住院大楼大厅LED采购项目询价采购公告',
-            time: '2020-03-23'
-          }]
+                classes: '招标公告',
+                address: '四川',
+                titles: '四川省资阳市乐至县盛池乡卫生院数字化X线摄影系统（DR）政府采购项目询价采购公告',
+                time: '2020-03-23'
+            }, {
+                classes: '招标公告',
+                address: '四川',
+                titles: '四川省巴中市南江县人民医院住院大楼大厅LED采购项目询价采购公告',
+                time: '2020-03-23'
+            },{
+                classes: '招标公告',
+                address: '四川',
+                titles: '四川省内江市东兴区自然资源和规划局内江市东兴区2019年中央财政森林抚育采购项目公开招标采购公告更正公告',
+                time: '2020-03-23'
+            },{
+                classes: '招标公告',
+                address: '四川',
+                titles: '四川省巴中市南江县人民医院住院大楼大厅LED采购项目询价采购公告',
+                time: '2020-03-23'
+            }]
         }
     },
     methods: {
@@ -175,4 +176,8 @@ export default {
     flex-wrap wrap
     justify-content center
     margin-top 20px
+.table_link
+    color #606266
+.el-table__body tr:hover>td a
+    color #de0403
 </style>

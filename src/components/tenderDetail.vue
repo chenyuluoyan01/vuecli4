@@ -83,6 +83,7 @@ export default {
             word-break break-word
             padding 10px
             text-indent 29px
+            line-height 24px
         .notice
             border 1px red solid
             padding 10px
@@ -94,15 +95,14 @@ export default {
             color #0898FF
             cursor pointer
     .pre_next
-        padding 0 15px
+        padding 0 15px 20px 15px
         height 40px
         line-height 40px
         .pre_txt
             width 50%
             overflow hidden
-        a:-webkit-any-link
-            color: #0898ff;
-            text-decoration: none;
+            a
+                color #0898ff
 .rContent
     width 300px
 </style>
