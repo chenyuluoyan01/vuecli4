@@ -152,6 +152,11 @@ export default {
             }]
         }
     },
+    created() {
+        this.$get('home',{"name":"zhangsan"}).then(res => {
+            console.log(res)
+        })
+    },
     methods: {
       onSubmit() {
         console.log('submit!');

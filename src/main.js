@@ -6,11 +6,17 @@ import router from './router'
 import store from './store'
 import './assets/iconfont/iconfont.css'
 import './assets/base.styl'
+
+import request from './network/request'
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 
+Vue.prototype.$post = request.post
+Vue.prototype.$get = request.get
 new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount('#app')
+
+
