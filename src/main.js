@@ -8,8 +8,11 @@ import './assets/iconfont/iconfont.css'
 import './assets/base.styl'
 
 import request from './network/request'
+import SIdentify from './components/identify/codeIdentify'
+
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.use(SIdentify)
 
 Vue.prototype.$post = request.post
 Vue.prototype.$get = request.get

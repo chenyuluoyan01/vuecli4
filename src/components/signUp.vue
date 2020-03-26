@@ -28,8 +28,16 @@
                 <el-input prefix-icon="iconfont iconmima" font-size="14px"  v-model="lform.password" placeholder="请输入密码"></el-input>
             </el-form-item>
             <el-form-item prop="lcode">
-                    <el-input prefix-icon="iconfont iconyanzhengma"  v-model="lform.lcode" placeholder="请输入验证码"></el-input>
-                    <!-- <sidentify></sidentify> -->
+                <div class="identi-div flexL">
+                    <div style="width:150px">
+                        <el-input prefix-icon="iconfont iconyanzhengma"  v-model="lform.lcode" placeholder="请输入验证码"></el-input>
+                    </div>
+                    
+                    <div class="code" style="height:40px;width:100px" @click="refreshCode">
+                        <SIdentify :identifyCode="identifyCode"></SIdentify>
+                    </div>                    
+                </div>
+
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSubmits">立即登录</el-button>
@@ -39,10 +47,10 @@
   </el-tabs>
 </template>
 <script>
-// import sidentify from './sidentify'
+import SIdentify from './identify/codeIdentify'
   export default {
     components: {
-        // sidentify
+        SIdentify
     },
     data() {
         var checkPhone = (rule, value, callback) => {
@@ -59,6 +67,9 @@
             }
         };
         return {
+            identifyCodes: "1234567890",
+            identifyCode: "",
+
             activeName: 'first',
             form: {
                 tel: '',
@@ -96,6 +107,11 @@
             }
       };
     },
+
+    mounted() {
+        this.identifyCode = "";
+        this.makeCode(this.identifyCodes, 4);
+    },
     methods: {
       handleClick(tab, event) {
         console.log(tab, event);
@@ -119,7 +135,22 @@
             return false;
           }
         })
+      },
+          randomNum(min, max) {
+      return Math.floor(Math.random() * (max - min) + min);
+    },
+    refreshCode() {
+      this.identifyCode = "";
+      this.makeCode(this.identifyCodes, 4);
+    },
+    makeCode(o, l) {
+      for (let i = 0; i < l; i++) {
+        this.identifyCode += this.identifyCodes[
+          this.randomNum(0, this.identifyCodes.length)
+        ];
       }
+      console.log(this.identifyCode);
+    }
     }
   };
 </script>
