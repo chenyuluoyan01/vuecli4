@@ -38,16 +38,20 @@
                 </div>
             </template>
         </hotWord>
+
+        <haslogin></haslogin>
     </div>
 </template>
 
 <script>
 import hotWord from './hotWords'
-import signUp from './signUp'
+import signUp from './login/signUp'
+import haslogin from './login/haslogin'
 export default {
     components:{
         signUp,
-        hotWord
+        hotWord,
+        haslogin
     },
   data() { 
     return {

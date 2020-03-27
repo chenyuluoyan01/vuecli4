@@ -29,7 +29,7 @@
             </el-form-item>
             <el-form-item prop="lcode">
                 <div class="identi-div flexL">
-                    <div style="width:150px">
+                    <div style="width:138px">
                         <el-input prefix-icon="iconfont iconyanzhengma"  v-model="lform.lcode" placeholder="请输入验证码"></el-input>
                     </div>
                     
@@ -47,7 +47,7 @@
   </el-tabs>
 </template>
 <script>
-import SIdentify from './identify/codeIdentify'
+import SIdentify from './codeIdentify'
   export default {
     components: {
         SIdentify

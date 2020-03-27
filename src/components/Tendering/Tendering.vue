@@ -7,9 +7,9 @@
                     <el-form-item label="类别：">
                         <el-radio-group v-model="form.resource">
                             <el-radio label="全部"></el-radio>
-                            <el-radio label="招标预告"></el-radio>
+                            <!-- <el-radio label="招标预告"></el-radio> -->
                             <el-radio label="招标公告"></el-radio>
-                            <el-radio label="招标变更"></el-radio>
+                            <!-- <el-radio label="招标变更"></el-radio> -->
                             <el-radio label="中标公告"></el-radio>
                         </el-radio-group>
                     </el-form-item>
@@ -86,7 +86,7 @@
                         prop="titles"
                         label="招标信息标题">
                         <template slot-scope="scope">
-                            <router-link class="table_link" to="/tenderDetail">{{scope.row.titles}}</router-link>
+                            <router-link class="table_link" :to="{name:'tenderDetail',query:{id:scope.row.id}}">{{scope.row.titles}}</router-link>
                         </template>
                     </el-table-column>
                     <el-table-column
@@ -106,17 +106,19 @@
             </div>
             <rightContent></rightContent>
         </div>
+        <addTable></addTable>
     </div>
 </template>
 
 <script>
 import navcontent from '../NavTab/navcontent'
 import rightContent from '../rightContent'
-
+import addTable from '../login/addTable'
 export default {
     components:{
         navcontent,
-        rightContent
+        rightContent,
+        addTable
     },
     data () {
         return {
@@ -133,22 +135,26 @@ export default {
                 classes: '招标公告',
                 address: '四川',
                 titles: '四川省资阳市乐至县盛池乡卫生院数字化X线摄影系统（DR）政府采购项目询价采购公告',
-                time: '2020-03-23'
+                time: '2020-03-23',
+                id: '1'
             }, {
                 classes: '招标公告',
                 address: '四川',
                 titles: '四川省巴中市南江县人民医院住院大楼大厅LED采购项目询价采购公告',
-                time: '2020-03-23'
+                time: '2020-03-23',
+                id: '2'
             },{
                 classes: '招标公告',
                 address: '四川',
                 titles: '四川省内江市东兴区自然资源和规划局内江市东兴区2019年中央财政森林抚育采购项目公开招标采购公告更正公告',
-                time: '2020-03-23'
+                time: '2020-03-23',
+                id: '3'
             },{
                 classes: '招标公告',
                 address: '四川',
                 titles: '四川省巴中市南江县人民医院住院大楼大厅LED采购项目询价采购公告',
-                time: '2020-03-23'
+                time: '2020-03-23',
+                id: '4'
             }]
         }
     },
