@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         author: '建筑公司',
-        isLogin: ''
+        isLogin: '',
     },
     mutations: {
         newAuthor(state, msg) {

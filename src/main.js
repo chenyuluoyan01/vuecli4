@@ -9,12 +9,12 @@ import './assets/base.styl'
 import Vuex from 'vuex'
 import request from './network/request'
 import SIdentify from './components/login/codeIdentify'
-import { Message } from 'element-ui';
+import { Message } from 'element-ui'
 Vue.config.productionTip = false
 Vue.use(ElementUI,SIdentify,Vuex)
 
-Vue.prototype.$post = request.post
-Vue.prototype.$get = request.get
+Vue.prototype.post = request.post
+Vue.prototype.get = request.get
 
 router.beforeEach((to,from,next) => {
     // localStorage.setItem('author','')
@@ -23,20 +23,13 @@ router.beforeEach((to,from,next) => {
     // 判断是否已经登录，即判断用户名是否存在
     // const role = localStorage.getItem('mc_usernamne')
     if(to.path === '/tenderDetail' && isLogin === '') {
-        Message.warning({message: '请登录',showClose: true})
-        // this.$message({
-        //     message: '警告哦，这是一条警告消息',
-        //     type: 'warning'
-        //   });
+        Message.warning({message: '请先登录',showClose: true})
         next('/')
     }else {
         next()
     }
-
     console.log(role)
-    console.log(to.path)
     console.log(from.path)
-    // console.log(next.path)
     
 })
 new Vue({

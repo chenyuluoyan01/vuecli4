@@ -22,8 +22,8 @@
                 </div>
                 <div style="height: 20px;width: 100%;background: #f8f8f8"></div>
                 <div class="pre_next flexM">
-                    <span class="pre_txt">上一条：<router-link to="/home">张家口市公安局万全区分局物业管理服务项目中标公告</router-link></span>
-                    <span class="pre_txt">下一条：<router-link to="/home">四川省凉山彝族自治州冕宁县职业技术学校厨房设备采购项目公开招标结果公告更正公告</router-link></span>
+                    <span class="pre_txt">上一条：<router-link :to="{name:'tenderDetail',query:{ids: preId}}">张家口市公安局万全区分局物业管理服务项目中标公告</router-link></span>
+                    <span class="pre_txt">下一条：<router-link :to="{name:'tenderDetail',query:{ids: nextId}}">四川省凉山彝族自治州冕宁县职业技术学校厨房设备采购项目公开招标结果公告更正公告</router-link></span>
                 </div>
             </div>
             <div class="rContent">
@@ -45,7 +45,33 @@ export default {
         return {
             ntitle:["> 招标信息","> 招标详情页"],
             titleVal:"四川省凉山彝族自治州越西县越西县农业农村局越西县2020年竹阿觉镇麻姑村产业园基础设施建设项目竞争性磋商采购公告",
-            timeDate:"2020-03-24"
+            timeDate:"2020-03-24",
+            pjtid: '',
+            preId: '1',
+            nextId: '2',
+            pageId:''
+        }
+    },
+
+    
+    mounted() {
+        this.pjtid = this.$route.query.id  // 从其他首页进入详情页的id
+        this.pageIdDetail(this.pjtid)
+    },
+    // 路由监听
+    watch: {
+        $route: {
+          handler() {
+            this.pageId = this.$route.query.ids // 详情页中上一页和下一页之间的切换
+            this.pageIdDetail(this.pageId);
+            //深度监听，同时也可监听到param参数变化
+        },
+        deep: true,
+        },
+    },
+    methods:{
+        pageIdDetail(idVal) {
+            console.log(idVal) // 这里可以向后台提供id，并请求数据
         }
     }
 }
