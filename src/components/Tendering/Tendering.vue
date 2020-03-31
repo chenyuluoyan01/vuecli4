@@ -31,6 +31,9 @@
                 </el-form>
 
                 <el-table
+                v-loading="loading"
+                element-loading-text="拼命加载中"
+                
                 :data="tableData"
                 style="width: 100%;margin-left:18px">
                     <el-table-column
@@ -99,6 +102,7 @@ export default {
             total:5,
             isIndeterminate: true,
             checkAll: false,
+            loading: true,
             form: {
                 name: '',
                 resource: ['-1'],
@@ -124,9 +128,31 @@ export default {
                 now_page: this.currentPage
             }
             this.get('bids/index/content/',params).then((res) => {
-                this.tableData = res.data.data
-                this.total = parseInt(res.data.pagination.number_of_page)
-                this.currentPage = parseInt(res.data.pagination.now_page)
+                this.loading = true 
+                if(res.code == '0') {
+                    this.tableData = res.data.data
+                    this.total = parseInt(res.data.pagination.number_of_page)
+                    this.currentPage = parseInt(res.data.pagination.now_page)
+                    setTimeout(() => {
+                        this.loading = false 
+                    },800)          
+                } else {
+                    setTimeout(() => {
+                        this.loading = false 
+                    },800) 
+                    this.$confirm('请求不到数据, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        this.onSubmit()
+                        }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消'
+                        })  
+                    })
+                }
             })
         },
 

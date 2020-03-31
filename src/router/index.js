@@ -28,8 +28,16 @@ const routes = [
     {
         path: '/userInfo',
         name: 'userInfo',
-        component: () => import('../components/userInfo/userInfo')
-    }
+        component: () => import('../components/userInfo/userInfo'),
+        redirect: '/userInfo/release',
+        children: [
+            {
+                path: 'release',
+                name: 'release',
+                component: () => import('../components/userInfo/release'),
+            }
+        ]
+    },
 ]
 
 const router = new VueRouter({

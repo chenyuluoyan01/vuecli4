@@ -29,7 +29,7 @@ router.beforeEach((to,from,next) => {
     }else {
         next()
     }
-    if(to.path === '/userInfo') {
+    if(to.path.includes('/userInfo')) {
         store.commit('toCenter', true)
         // console.log(store.state.toCenter)
     }

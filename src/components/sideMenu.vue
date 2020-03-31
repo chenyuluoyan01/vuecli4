@@ -2,8 +2,8 @@
     <div>
         <div class="nav">
             <div class="navContent">
-                <div class="toggle-button" @click="toggleCollapse">
-                    <i class="iconfont" :class="{iconzhankai2:isCollapse,iconzhedie1:!isCollapse}"></i>
+                <div class="toggle-button " @click="toggleCollapse">
+                    <i class="iconfont" :class="{iconzhankai2:!isCollapse,iconzhedie1:isCollapse}"></i>
                 </div>
                 <!-- <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
                     <el-radio-button :label="false">展开</el-radio-button>
@@ -12,38 +12,31 @@
             </div>
         </div>
 
-        <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
-        <el-submenu index="1">
-            <template slot="title">
-            <i class="el-icon-location"></i>
-            <span slot="title">导航一</span>
-            </template>
-            <el-menu-item-group>
-            <!-- <span slot="title">分组一</span> -->
-            <el-menu-item index="1-1">选项1</el-menu-item>
-            <el-menu-item index="1-2">选项2</el-menu-item>
-            <el-menu-item index="1-3">选项3</el-menu-item>
-            </el-menu-item-group>
-            <!-- <el-menu-item-group title="分组2">
-            
-            </el-menu-item-group> -->
-            <el-submenu index="1-4">
-            <span slot="title">选项4</span>
-            <el-menu-item index="1-4-1">选项1</el-menu-item>
+        <el-menu class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse" :default-active = "activeIndex" router>
+            <el-submenu index="1">
+                <template slot="title" >
+                    <i class="el-icon-location"></i>
+                    <span slot="title">导航一</span>
+                </template>
+                <template v-for="(item, index) in nav_menu_data">
+                    <el-menu-item :index = "item.path" :key = "index">
+                        {{item.title}}
+                    </el-menu-item>
+                </template>
             </el-submenu>
-        </el-submenu>
-        <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <span slot="title">导航二</span>
-        </el-menu-item>
-        <el-menu-item index="3">
-            <i class="el-icon-document"></i>
-            <span slot="title">导航三</span>
-        </el-menu-item>
-        <el-menu-item index="4">
-            <i class="el-icon-setting"></i>
-            <span slot="title">导航四</span>
-        </el-menu-item>
+
+            <el-menu-item index="2">
+                <i class="el-icon-menu"></i>
+                <span slot="title">导航二</span>
+            </el-menu-item>
+            <el-menu-item index="3">
+                <i class="el-icon-document"></i>
+                <span slot="title">导航三</span>
+            </el-menu-item>
+            <el-menu-item index="4">
+                <i class="el-icon-setting"></i>
+                <span slot="title">导航四</span>
+            </el-menu-item>
         </el-menu>
 
     </div>
@@ -52,7 +45,21 @@
   export default {
     data() {
       return {
-        isCollapse: true
+        isCollapse: false,
+        activeIndex: '/userInfo/release',
+        nav_menu_data: [{
+            title: '发布招标',
+            path: '/userInfo/release',
+        }, {
+            title: '导航二',
+            path: '/Menu/Page2'
+        }, {
+            title: '导航三',
+            path: '/Menu/Page3'
+        }, {
+            title: '导航四',
+            path: '/Menu/Page4'
+        }]
       };
     },
     methods: {
@@ -79,7 +86,8 @@
     height 60px
     line-height 40px
     text-align center
+    cursor pointer
+    padding-left 200px
 .navContent
     width 100%
-    margin 0 60px
 </style>>

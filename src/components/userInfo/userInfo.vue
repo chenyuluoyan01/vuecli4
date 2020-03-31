@@ -1,13 +1,16 @@
 <template>
-    <div class="u-container">
+    <div class="u-container flexL">
         <sideMenu></sideMenu>
+        <release></release>
     </div>
 </template>
 <script>
 import sideMenu from '../sideMenu'
+import release from './release'
 export default {
     components: {
-        sideMenu
+        sideMenu,
+        release
     },
     data() {
         return {

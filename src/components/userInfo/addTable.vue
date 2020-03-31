@@ -7,7 +7,15 @@
             <el-table-column
                     prop="bookname"
                     label="材料名称"
-                    width="140px">
+                    width="200">
+                <!-- <template slot-scope="scope">
+                    <el-input v-model="scope.row.bookname" type="number"></el-input>
+                </template> -->
+            </el-table-column>
+            <el-table-column
+                    prop="nickname"
+                    label="别名"
+                    width="150">
                 <!-- <template slot-scope="scope">
                     <el-input v-model="scope.row.bookname" type="number"></el-input>
                 </template> -->
@@ -16,22 +24,46 @@
             <el-table-column
                     prop="recoveryTwo"
                     label="材料规格"
-                    width="140px">
+                    width="120">
+                <!-- <template slot-scope="scope">
+                    <el-input v-model="scope.row.bookvolume" type="number"></el-input>
+                </template> -->
+            </el-table-column>
+            <el-table-column
+                    prop="style"
+                    label="材料类型"
+                    width="100">
+                <!-- <template slot-scope="scope">
+                    <el-input v-model="scope.row.bookvolume" type="number"></el-input>
+                </template> -->
+            </el-table-column>
+            <el-table-column
+                    prop="unit"
+                    label="单位"
+                    width="80">
                 <!-- <template slot-scope="scope">
                     <el-input v-model="scope.row.bookvolume" type="number"></el-input>
                 </template> -->
             </el-table-column>
 
             <el-table-column
-                    prop="bookborrower"
-                    label="材料价格"
-                    width="150px">
+                    prop="num"
+                    label="数量"
+                    width="80">
+                <!-- <template slot-scope="scope">
+                    <el-input v-model="scope.row.bookvolume" type="number"></el-input>
+                </template> -->
+            </el-table-column>
+            <el-table-column
+                    prop="logo"
+                    label="品牌"
+                    width="80">
                 <!-- <template slot-scope="scope">
                     <el-input v-model="scope.row.bookborrower" type="number"></el-input>
                 </template> -->
             </el-table-column>
 
-            <el-table-column>
+            <el-table-column width="120" label="编辑" prop="edit">
                 <template slot-scope="scope">
                     <!-- <button @click="addLine(scope.$index)"
                             class="addBtn"
