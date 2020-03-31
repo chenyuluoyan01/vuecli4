@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <Carousel></Carousel>
         <navcontent :title="ntitle"></navcontent>
         <div class="flexM">
             <div class="lContent">
@@ -36,10 +37,12 @@
 <script>
 import navcontent from './NavTab/navcontent'
 import rightContent from './rightContent'
+import Carousel from './carousel'
 export default {
     components:{
         navcontent,
-        rightContent
+        rightContent,
+        Carousel
     },
     data() {
         return {

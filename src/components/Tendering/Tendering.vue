@@ -1,63 +1,24 @@
 <template>
     <div class="container">
+        <Carousel></Carousel>
         <navcontent :title="ntitle"></navcontent>
         <div class="flexM">
             <div class="left bgcolor">
                 <el-form ref="form" :model="form" label-width="80px">
                     <el-form-item label="类别：">
-                        <el-radio-group v-model="form.resource">
-                            <el-radio label="全部"></el-radio>
-                            <!-- <el-radio label="招标预告"></el-radio> -->
-                            <el-radio label="招标公告"></el-radio>
-                            <!-- <el-radio label="招标变更"></el-radio> -->
-                            <el-radio label="中标公告"></el-radio>
+                        <el-radio-group v-model="form.type" >
+                            <el-radio :label="item[0]" v-for="item in typesData" :key="item[0]">{{item[1]}}</el-radio>
                         </el-radio-group>
                     </el-form-item>
                     <el-form-item label="地区：">
-                        <el-checkbox-group v-model="form.type">
-                            <el-checkbox label="全部" name="type"></el-checkbox>
-                            <el-checkbox label="吉林" name="type"></el-checkbox>
-                            <el-checkbox label="黑龙江" name="type"></el-checkbox>
-                            <el-checkbox label="辽宁" name="type"></el-checkbox>
-                            <el-checkbox label="北京" name="type"></el-checkbox>
-                            <el-checkbox label="天津" name="type"></el-checkbox>
-                            <el-checkbox label="河北" name="type"></el-checkbox>
-                            <el-checkbox label="山西" name="type"></el-checkbox>
-                            <el-checkbox label="内蒙古" name="type"></el-checkbox>
-                            <el-checkbox label="上海" name="type"></el-checkbox>
-                            <el-checkbox label="江苏" name="type"></el-checkbox>
-                            <el-checkbox label="浙江" name="type"></el-checkbox>
-                            <el-checkbox label="山东" name="type"></el-checkbox>
-                            <el-checkbox label="安徽" name="type"></el-checkbox>
-                            <el-checkbox label="江西" name="type"></el-checkbox>
-                            <el-checkbox label="福建" name="type"></el-checkbox>
-                            <el-checkbox label="四川" name="type"></el-checkbox>
-                            <el-checkbox label="重庆" name="type"></el-checkbox>
-                            <el-checkbox label="云南" name="type"></el-checkbox>
-                            <el-checkbox label="贵州" name="type"></el-checkbox>
-                            <el-checkbox label="西藏" name="type"></el-checkbox>
-                            <el-checkbox label="广东" name="type"></el-checkbox>
-                            <el-checkbox label="广西" name="type"></el-checkbox>
-                            <el-checkbox label="湖南" name="type"></el-checkbox>
-                            <el-checkbox label="湖北" name="type"></el-checkbox>
-                            <el-checkbox label="河南" name="type"></el-checkbox>
-                            <el-checkbox label="陕西" name="type"></el-checkbox>
-                            <el-checkbox label="甘肃" name="type"></el-checkbox>
-                            <el-checkbox label="新疆" name="type"></el-checkbox>
-                            <el-checkbox label="宁夏" name="type"></el-checkbox>
-                            <el-checkbox label="青海" name="type"></el-checkbox>
-                            <el-checkbox label="海南" name="type"></el-checkbox>
+                        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+                        <el-checkbox-group v-model="form.resource" @change="handleCheckedCitiesChange">
+                            <el-checkbox :label="item[0]" name="type" v-for="item in regionData" :key="item[0]">{{item[1]}}</el-checkbox>
                         </el-checkbox-group>
                     </el-form-item>
                     <el-form-item label="时间：">
                         <el-radio-group v-model="form.time">
-                            <el-radio label="全部"></el-radio>
-                            <el-radio label="一周"></el-radio>
-                            <el-radio label="一个月"></el-radio>
-                            <el-radio label="三个月"></el-radio>
-                            <el-radio label="半年"></el-radio>
-                            <el-radio label="一年"></el-radio>
-                            <el-radio label="两年"></el-radio>
+                            <el-radio :label="item[0]" v-for="item in time_range" :key="item[0]">{{item[1]}}</el-radio>
                         </el-radio-group>
                     </el-form-item>
                     <el-form-item label="搜索：">
@@ -73,24 +34,24 @@
                 :data="tableData"
                 style="width: 100%;margin-left:18px">
                     <el-table-column
-                        prop="classes"
+                        prop="1"
                         label="类型"
                         width="120">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
+                        prop="2"
                         label="地址"
                         width="150">
                     </el-table-column>
                     <el-table-column
-                        prop="titles"
+                        prop="3"
                         label="招标信息标题">
                         <template slot-scope="scope">
-                            <router-link class="table_link" :to="{name:'tenderDetail',query:{id:scope.row.id}}">{{scope.row.titles}}</router-link>
+                            <router-link class="table_link" :to="{name:'tenderDetail',query:{id:scope.row[0]}}">{{scope.row[3]}}</router-link>
                         </template>
                     </el-table-column>
                     <el-table-column
-                        prop="time"
+                        prop="4"
                         label="发布时间"
                         width="180">
                     </el-table-column>
@@ -98,75 +59,122 @@
                 <div class="pages">
                     <el-pagination
                     background
-                    layout="prev, pager, next"
-                    :total="100">
+                    layout="sizes, prev, pager, next"
+                    @current-change="handleCurrentChange"
+                    @size-change = "handleSizeChange"
+                    :current-page="currentPage"
+                    :page-sizes="[1, 20, 30, 50]"
+                    :page-size="pageSize"
+                    :total="total">
                     </el-pagination>
                 </div>
 
             </div>
-            <rightContent></rightContent>
+            <rightContent @func="getMsgFormSon"></rightContent>
         </div>
-        <addTable></addTable>
+        <!-- <addTable></addTable> -->
     </div>
 </template>
 
 <script>
 import navcontent from '../NavTab/navcontent'
 import rightContent from '../rightContent'
-import addTable from '../login/addTable'
+// import addTable from '../login/addTable'
+import Carousel from '../carousel'
 export default {
     components:{
         navcontent,
         rightContent,
-        addTable
+        // addTable,
+        Carousel
     },
     data () {
         return {
             ntitle:["招标信息"],
-            words:["三坐标","量规","量块","量具","医药","医疗","防疫药品","急救箱","采血管","绘图机","通用仪器","三坐标","量规","量块","量具","医药","医疗","防疫药品","急救箱","采血管","绘图机","通用仪器"],
-            buildWord:["广东恒建工程有限公司","中交二航局-广东广州","中交四航局-广州","中铁南方投资集团有限公司","鹤山市友和建筑工程有限公司","中铁建设集团有限公司华南分公司","中国能源建设集团广东火电工程有限公","中铁建设集团有限公司华南分公司"],
+            typesData:[],
+            regionData:[],
+            time_range:[],
+            currentPage:1,
+            pageSize:1,
+            total:5,
+            isIndeterminate: true,
+            checkAll: false,
             form: {
                 name: '',
-                type: ['全部'],
-                resource: '全部',
-                time:'全部'
+                resource: ['-1'],
+                type: '-1',
+                time:'-1'
             },
-            tableData: [{
-                classes: '招标公告',
-                address: '四川',
-                titles: '四川省资阳市乐至县盛池乡卫生院数字化X线摄影系统（DR）政府采购项目询价采购公告',
-                time: '2020-03-23',
-                id: '1'
-            }, {
-                classes: '招标公告',
-                address: '四川',
-                titles: '四川省巴中市南江县人民医院住院大楼大厅LED采购项目询价采购公告',
-                time: '2020-03-23',
-                id: '2'
-            },{
-                classes: '招标公告',
-                address: '四川',
-                titles: '四川省内江市东兴区自然资源和规划局内江市东兴区2019年中央财政森林抚育采购项目公开招标采购公告更正公告',
-                time: '2020-03-23',
-                id: '3'
-            },{
-                classes: '招标公告',
-                address: '四川',
-                titles: '四川省巴中市南江县人民医院住院大楼大厅LED采购项目询价采购公告',
-                time: '2020-03-23',
-                id: '4'
-            }]
+            tableData: []
         }
     },
     created() {
-        // this.get('home',{"name":"zhangsan"}).then(res => {
-        //     console.log(res)
-        // })
+        this.getSearch()
+        this.onSubmit()
     },
     methods: {
-      onSubmit() {
-        console.log('submit!');
-      }
+        // 搜索功能
+        onSubmit() {
+            let params = {
+                types: this.form.type,
+                region: JSON.stringify(this.form.resource),
+                time: this.form.time,
+                search: this.form.name,
+                page_size: this.pageSize,
+                now_page: this.currentPage
+            }
+            this.get('bids/index/content/',params).then((res) => {
+                this.tableData = res.data.data
+                this.total = parseInt(res.data.pagination.number_of_page)
+                this.currentPage = parseInt(res.data.pagination.now_page)
+            })
+        },
+
+        // 渲染表单内容
+        getSearch() {
+            this.get('bids/index/top/').then((res) => {
+                this.typesData = res.data.types
+                this.regionData = res.data.region
+                this.time_range = res.data.time_range
+            })
+        },
+
+        // 分页功能
+        handleSizeChange(val){
+            this.pageSize = val
+            this.onSubmit()
+        },
+        handleCurrentChange(val){
+            console.log(val)
+            this.currentPage = val
+            this.onSubmit()
+        },
+
+        // 表单多选框部分
+        handleCheckAllChange(val) {
+            if(val) {
+                this.form.resource = this.regionData.map((val,key) => {return val[0]})
+            } else {
+                this.form.resource = []
+            }
+            this.isIndeterminate = false;
+            console.log(this.form.resource)
+        },
+        handleCheckedCitiesChange(value) {
+            
+            this.form.resource = value
+            console.log(this.form.resource)
+            let checkedCount = value.length
+            this.checkAll = checkedCount === this.regionData.length
+            this.isIndeterminate = checkedCount > 0 && checkedCount < this.regionData.length
+        },
+
+        // 子组件传值给父组件
+        getMsgFormSon(data) {
+            this.form.name = data
+            this.onSubmit()
+        }
+
     }
 }
 </script>

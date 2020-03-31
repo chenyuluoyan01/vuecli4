@@ -5,17 +5,17 @@
                 <img src="../../assets/images/head_img.png" alt="">
             </div>
             <div class="infoDiv">
-                <p>{{tel}}</p>
+                <p>{{data.cell_phone}}</p>
                 <p class="member">
                     <i class="iconfont iconyanzhengma"></i>
                     <span>{{member}}</span>
                 </p>
-                <p class="company">深圳市闽宸建筑工程</p>
+                <p class="company">{{data.company_name}}</p>
             </div>
         </div>
         <div class="mid flexM font_mid">
-            <el-button type="primary" plain>会员中心</el-button>
-            <el-button plain>退出登录</el-button>
+            <el-button type="primary" plain @click="toCenter">会员中心</el-button>
+            <el-button plain @click="exit()">退出登录</el-button>
         </div>
         <div class="bottom font_sm">
             <div class="kefu">我的专属客服</div>
@@ -36,6 +36,7 @@
 
 <script>
 export default {
+    props:['data'],
     data() { 
         return {
             tel: '19908429295',
@@ -45,6 +46,15 @@ export default {
                 tel: '18926491548',
                 email: 'lisa.wang@china0001.com.cn'
             }]
+        }
+    },
+    methods: {
+        exit() {
+            this.$store.commit('isLogin', false)
+            localStorage.setItem('token', '')
+        },
+        toCenter() {
+            this.$router.push({path:'/userInfo'})
         }
     }
 }
@@ -67,6 +77,8 @@ export default {
         background-color #ddeefd
         border-radius 1rem
     .infoDiv
+        width 140px
+        overflow hidden
         .iconfont
             color #3391e4
             margin-right 8px

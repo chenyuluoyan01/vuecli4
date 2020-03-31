@@ -27,10 +27,15 @@
             <el-form-item prop="phone">
                 <el-input prefix-icon="iconfont iconshoujihao"  v-model="lform.phone" placeholder="请输入手机号码"></el-input>
             </el-form-item>
+            <el-form-item style="margin-left:0px" prop="lcode">
+                <el-input prefix-icon="iconfont iconyanzhengma"  v-model="lform.lcode" placeholder="请输入验证码"></el-input>
+                <span class="get-code" @click="getCodes()" v-show="!hasCode">获取验证码</span>
+                <span class="get-code" v-show="hasCode">{{countdown+'s'}}</span>
+            </el-form-item>
             <el-form-item prop="password">
                 <el-input prefix-icon="iconfont iconmima" font-size="14px"  v-model="lform.password" placeholder="请输入密码"></el-input>
             </el-form-item>
-            <el-form-item prop="lcode">
+            <!-- <el-form-item prop="lcode">
                 <div class="identi-div flexL">
                     <div style="width:138px">
                         <el-input prefix-icon="iconfont iconyanzhengma"  v-model="lform.lcode" placeholder="请输入验证码"></el-input>
@@ -40,10 +45,11 @@
                         <SIdentify :identifyCode="identifyCode"></SIdentify>
                     </div>                    
                 </div>
+            </el-form-item> -->
 
-            </el-form-item>
+
             <el-form-item>
-                <el-button type="primary" @click="onSubmits">立即登录</el-button>
+                <el-button type="primary" @click="onLogin">立即登录</el-button>
             </el-form-item>
         </el-form>
     </el-tab-pane>
@@ -71,6 +77,7 @@ import {isPhone} from '../../validate/index'  // 导入验证
         //         }
         //     }
         // };
+        
         return {
             identifyCodes: "1234567890",
             identifyCode: "",
@@ -103,21 +110,20 @@ import {isPhone} from '../../validate/index'  // 导入验证
                     { required: true,  trigger: 'blur' }
                 ],
                 phone: [
-                    { required: true,  trigger: 'blur' }
-                ],
-                password: [
-                    { required: true,  trigger: 'blur' }
-                ],
-                lcode: [
-                    { required: true,  trigger: 'blur' }
+                    { required: true,validator: isPhone,  trigger: 'blur' }
                 ]
             }
       };
     },
 
-    mounted() {
+    created() {
         this.identifyCode = "";
-        this.makeCode(this.identifyCodes, 4);
+        // this.makeCode(this.identifyCodes, 4);
+    },
+    watch :{
+        '$store.state.isLogin':(val) => {
+            console.log(val)
+        }
     },
     methods: {
         handleClick(tab, event) {
@@ -161,7 +167,10 @@ import {isPhone} from '../../validate/index'  // 导入验证
                 }
                 if (valid) {
                     this.post('user/register/',params).then((res)=>{
-                        console.log(res)
+                        if(res.code == '0') {
+                            this.$store.commit('isLogin', true)
+                            localStorage.setItem('token',res.data.token)
+                        }      
                     }).catch((error) => {
                     // catch 指请求出错的处理
                         console.log(error);
@@ -172,17 +181,81 @@ import {isPhone} from '../../validate/index'  // 导入验证
                 }
             })
         },
-      onSubmits() {
-        this.$refs.lform.validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        })
-      },
-          randomNum(min, max) {
+        // 获取登陆验证码
+        getCodes() {
+            this.$refs.lform.validate((valid) => {
+                if(valid) {
+                    let params = {
+                        cell_phone: this.lform.phone
+                    }
+                    this.get('user/login/', params).then((res) => {
+                        if(res.code == '0') {
+                            this.hasCode = true
+                            this.cut_time()
+                        }
+                    }).catch((error) => {
+                        console.log(error);
+                    })
+                }
+            })
+        },
+        onLogin() {
+            this.$refs.lform.validate((valid) => {
+                let params =  {
+                        cell_phone: this.lform.phone,
+                        vcode: this.lform.lcode,
+                        password: this.lform.password,
+                    }  
+                if (valid) {
+                    this.post('user/login/',params).then((res) => {
+                        if(res.code == '0') {
+                            this.$store.commit('isLogin', true)
+                            
+                            // this.$store.commit('loginPhone', params.cell_phone)
+                            // this.$store.commit('loginCode', params.vcode)
+                            // this.$store.commit('loginPwd', params.password)
+                            localStorage.setItem('token',res.data.token)
+                            // console.log(this.$store.state.loginPhone)
+                        } else if(res.code == '1005') {
+                            console.log('验证码不正确')
+                            this.$notify({
+                                title: '错误',
+                                message: '验证码不正确',
+                                type: 'warning'
+                            })
+                            this.lform.lcode = ''
+                        } else if(res.code == '1002') {
+                            console.log('账号或密码错误')
+                            this.$notify({
+                                title: '错误',
+                                message: '账号或密码错误',
+                                type: 'warning'
+                            })
+                        } else if(res.code == '1000') {
+                            console.log('请返回登录')
+                            this.$notify({
+                                title: '错误',
+                                message: '请返回登录',
+                                type: 'warning'
+                            })
+                        } else if(res.code == '1008') {
+                            console.log('该用户不存在')
+                            this.$notify({
+                                title: '错误',
+                                message: '该用户不存在',
+                                type: 'warning'
+                            })
+                        }
+                        
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            })
+        },
+    // 图形验证码    
+    randomNum(min, max) {
       return Math.floor(Math.random() * (max - min) + min);
     },
     refreshCode() {

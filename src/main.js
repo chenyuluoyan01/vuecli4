@@ -15,6 +15,7 @@ Vue.use(ElementUI,SIdentify,Vuex)
 
 Vue.prototype.post = request.post
 Vue.prototype.get = request.get
+Vue.prototype.$message = Message
 
 router.beforeEach((to,from,next) => {
     // localStorage.setItem('author','')
@@ -22,14 +23,16 @@ router.beforeEach((to,from,next) => {
     const isLogin = localStorage.getItem('isLogin')
     // 判断是否已经登录，即判断用户名是否存在
     // const role = localStorage.getItem('mc_usernamne')
-    if(to.path === '/tenderDetail' && isLogin === '') {
+    if(to.path === '/tenderDetail' && isLogin === 'false') {
         Message.warning({message: '请先登录',showClose: true})
         next('/')
     }else {
         next()
     }
-    console.log(role)
-    console.log(from.path)
+    if(to.path === '/userInfo') {
+        store.commit('toCenter', true)
+        // console.log(store.state.toCenter)
+    }
     
 })
 new Vue({
