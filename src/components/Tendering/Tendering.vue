@@ -109,7 +109,16 @@ export default {
                 type: '-1',
                 time:'-1'
             },
+            // preForm: JSON.parse(JSON.stringify(form)), //深拷贝对象
             tableData: []
+        }
+    },
+    watch: {
+        form:{
+            handler:function(obj){
+                this.onSubmit()
+            },
+            deep:true
         }
     },
     created() {
@@ -161,6 +170,8 @@ export default {
             this.get('bids/index/top/').then((res) => {
                 this.typesData = res.data.types
                 this.regionData = res.data.region
+                this.$store.commit('regionData', res.data.region)
+                localStorage.setItem('regionData', JSON.stringify(res.data.region))
                 this.time_range = res.data.time_range
             })
         },

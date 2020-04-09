@@ -120,11 +120,6 @@ import {isPhone} from '../../validate/index'  // 导入验证
         this.identifyCode = "";
         // this.makeCode(this.identifyCodes, 4);
     },
-    watch :{
-        '$store.state.isLogin':(val) => {
-            console.log(val)
-        }
-    },
     methods: {
         handleClick(tab, event) {
             console.log(tab, event);
@@ -169,6 +164,9 @@ import {isPhone} from '../../validate/index'  // 导入验证
                     this.post('user/register/',params).then((res)=>{
                         if(res.code == '0') {
                             this.$store.commit('isLogin', true)
+                            localStorage.setItem("isLogin", true)
+                            this.$store.commit('loginPhone', this.lform.tel)
+                            localStorage.setItem("loginPhone", this.lform.tel)
                             localStorage.setItem('token',res.data.token)
                         }      
                     }).catch((error) => {
@@ -210,7 +208,9 @@ import {isPhone} from '../../validate/index'  // 导入验证
                     this.post('user/login/',params).then((res) => {
                         if(res.code == '0') {
                             this.$store.commit('isLogin', true)
-                            
+                            localStorage.setItem("isLogin", true)
+                            this.$store.commit('loginPhone', this.lform.phone)
+                            localStorage.setItem("loginPhone", this.lform.phone)
                             // this.$store.commit('loginPhone', params.cell_phone)
                             // this.$store.commit('loginCode', params.vcode)
                             // this.$store.commit('loginPwd', params.password)

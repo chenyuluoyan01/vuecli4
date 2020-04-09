@@ -4,11 +4,14 @@ import Qs from 'qs'
 // 相对路径设置
 axios.defaults.baseURL = '/api'
 
-//设置默认请求头
+// 设置默认请求头
 axios.defaults.headers = {
     "Content-Type": "application/x-www-form-urlencoded",       // 设置传输类型(json,form表单)
     "token": localStorage.getItem('token')    // token
 }
+// axios.defaults.headers.token= localStorage.getItem('token')
+// axios.defaults.headers.post['Content-Type'] = 'multipart/form-data'
+// axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded'
   
 axios.defaults.timeout = 10000  // 响应时间
 export default {

@@ -23,12 +23,13 @@ router.beforeEach((to,from,next) => {
     const isLogin = localStorage.getItem('isLogin')
     // 判断是否已经登录，即判断用户名是否存在
     // const role = localStorage.getItem('mc_usernamne')
-    if(to.path === '/tenderDetail' && isLogin === 'false') {
-        Message.warning({message: '请先登录',showClose: true})
-        next('/')
-    }else {
-        next()
-    }
+    // if(to.path === '/tenderDetail' && isLogin === 'false') {
+    //     Message.warning({message: '请先登录',showClose: true})
+    //     next('/')
+    // }else {
+    //     next()
+    // }
+    next()
     if(to.path.includes('/userInfo')) {
         store.commit('toCenter', true)
         // console.log(store.state.toCenter)

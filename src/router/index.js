@@ -23,7 +23,15 @@ const routes = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../components/tenderDetail')
+        component: () => import(/* webpackChunkName: "about" */ '../components/Detail/tenderDetail')
+    },
+    {
+        path: '/bid',
+        name: 'bid',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "about" */ '../components/Detail/bid')
     },
     {
         path: '/userInfo',
@@ -35,7 +43,22 @@ const routes = [
                 path: 'release',
                 name: 'release',
                 component: () => import('../components/userInfo/release'),
-            }
+            },
+            {
+                path: 'queryRelease',
+                name: 'queryRelease',
+                component: () => import('../components/userInfo/queryRelease'),
+            },
+            {
+                path: 'winbid',
+                name: 'winbid',
+                component: () => import('../components/userInfo/winbid'),
+            },
+            {
+                path: 'issuewinbid',
+                name: 'issuewinbid',
+                component: () => import('../components/userInfo/issueWinBid'),
+            },
         ]
     },
 ]

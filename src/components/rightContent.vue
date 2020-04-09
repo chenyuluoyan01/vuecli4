@@ -6,7 +6,6 @@
             <template slot="hot">
                 <div class="top">
                     <div class="flexM paddingW">
-                        
                         <span><img class="shutiao" src="../assets/images/bd_left.png" alt="">招标热词</span>
                         <span class="more">更多</span>
                     </div>
@@ -65,28 +64,56 @@ export default {
     methods: {
         sendMsg(val) {
             this.$emit('func',val)
-        }
-    },
-    created() {
-        if(localStorage.getItem("isLogin") == 'true') {
-            if(localStorage.getItem('token')) {
-                this.get('user/index/').then((res) => {
-                    if(res.code == '0') {
-                        // this.$store.commit('isLogin', true)
-                        // localStorage.setItem('token',res.data.token)
-                        console.log(res.data)
-                        this.logining = true
-                        this.loginData = Object.assign({},res.data)
-                    }
+        },
+        getHotWord() {
+            this.get('bids/get/hot/word/').then((res) => {
+                console.log(res.data)
+                this.words = res.data.map((item) => {
+                    return item[5]
                 })
+            })
+        },
+        doLogin() {
+            if(localStorage.getItem("isLogin") == 'true') {
+                if(localStorage.getItem('token')) {
+                    this.get('user/index/').then((res) => {
+                        if(res.code == '0') {
+                            // this.$store.commit('isLogin', true)
+                            // localStorage.setItem('token',res.data.token)
+                            console.log(res.data)
+                            this.logining = true
+                            this.loginData = Object.assign({},res.data)
+                            
+                        }
+                    })
+                } else {
+                    this.logining = false
+                }
+                
             } else {
                 this.logining = false
             }
-            
-        } else {
-            this.logining = false
         }
-    }
+    },
+    //利用计算属性
+    computed: {
+        myLogin() {
+            return this.$store.state.isLogin;
+        }
+    },
+    //监听执行
+    watch: {
+        myLogin(val) {
+            this.logining = val
+            this.doLogin()
+        }
+    },
+    created() {
+        this.doLogin()
+    },
+    mounted() {
+        this.getHotWord()
+    },
  }
 </script>
 
@@ -103,4 +130,7 @@ export default {
     vertical-align middle
 .clickwords
     cursor pointer
+.bottom
+    .clickwords:hover
+        color #DE0403
 </style>

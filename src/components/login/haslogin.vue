@@ -5,12 +5,12 @@
                 <img src="../../assets/images/head_img.png" alt="">
             </div>
             <div class="infoDiv">
-                <p>{{data.cell_phone}}</p>
+                <p>{{loginList.cell_phone}}</p>
                 <p class="member">
                     <i class="iconfont iconyanzhengma"></i>
                     <span>{{member}}</span>
                 </p>
-                <p class="company">{{data.company_name}}</p>
+                <p class="company">{{loginList.company_name}}</p>
             </div>
         </div>
         <div class="mid flexM font_mid">
@@ -35,11 +35,11 @@
 </template>
 
 <script>
+import {mapState,mapMutations} from 'vuex'
 export default {
     props:['data'],
     data() { 
         return {
-            tel: '19908429295',
             member: '试用会员',
             kflist:[{
                 name: '王莲娣',
@@ -48,6 +48,15 @@ export default {
             }]
         }
     },
+    created() {
+        this.$store.dispatch('getLoginAction')
+    },
+    //计算state数据
+        computed:{
+            ...mapState({
+              loginList:'loginList',
+            })
+        },
     methods: {
         exit() {
             this.$store.commit('isLogin', false)
